@@ -8,9 +8,9 @@
     <form action="." method="post" enctype="multipart/form-data">
         {{ paper_form.as_p }}
         <p>提交PDF文件</p>
-        <input type="file" ,name="pdf_file">
+        <input type="file" name="pdf_file"/>
         {% csrf_token %}
-        <p><input type="submit" value="Submit Paper"></p>
+        <p><input type="submit" value="Submit Paper"/></p>
     </form>
     {% endif %}
 {% endblock %}

@@ -153,10 +153,13 @@ def submit_paper(request):
         paper_form = PaperForm(data=request.POST)
         if paper_form.is_valid():
             pdf_file = request.FILES.get('pdf_file', None)
+            print(pdf_file)
             if pdf_file:
-                pdf_url = os.path.join('data', str(request.user.profile.student_id),
-                                            'pdf', pdf_file.name)
-                destination = open(pdf_url, 'wb+')
+                pdf_url = os.path.join('data', str(request.user.profile.student_id), 'pdf')
+                pdf_file_url = os.path.join(pdf_url, pdf_file.name)
+                if not os.path.exists(pdf_url):
+                    os.makedirs(pdf_url)
+                destination = open(pdf_file_url, 'wb+')
                 for chunk in pdf_file.chunks():
                     destination.write(chunk)
                 destination.close()
@@ -165,6 +168,8 @@ def submit_paper(request):
                 paper_object.author = request.user
                 paper_object.pdf_url = pdf_url
                 paper_object.save()
+                # 保存tag关系
+                paper_form.save_m2m()
                 messages.success(request, 'Paper submitting successfully')
             else:
                 messages.error(request, 'Error submitting your paper')
