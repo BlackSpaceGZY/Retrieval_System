@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Search Paper{%  endblock %}
+
+{%  block content %}
+    <h1>Hello Retrieval System</h1>
+    <h2>New Published Paper</h2>
+    {% for paper in new_publish_paper %}
+            <h3>
+            <a href="{{ paper.get_absolute_url }}">
+               {{ paper.title }}
+            </a>
+        </h3>
+    {% endfor %}
+    <h2>Past Published Paper</h2>
+    {% for paper in paper_list %}
+        <h3>
+            <a href="{{ paper.get_absolute_url }}">
+               {{ paper.title }}
+            </a>
+        </h3>
+        <p class="date">
+            Published {{ paper.publish }} by {{ paper.author }}
+        </p>
+    {% endfor %}
+{% endblock %}

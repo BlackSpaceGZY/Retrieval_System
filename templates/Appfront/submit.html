@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if paper_object %}
+        <h2>Your Paper is submitted successfully! </h2>
+    {% else %}
+    <form action="." method="post" enctype="multipart/form-data">
+        {{ paper_form.as_p }}
+        <p>提交PDF文件</p>
+        <input type="file" ,name="pdf_file">
+        {% csrf_token %}
+        <p><input type="submit" value="Submit Paper"></p>
+    </form>
+    {% endif %}
+{% endblock %}

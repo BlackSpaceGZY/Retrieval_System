@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+
+<body>
+    <div id="header">
+        <span class="logo">Retrieval System</span>
+        {% if request.user.is_authenticated %}
+          <ul class="menu">
+            <li {% if section == "Home" %}class="selected"{% endif %}>
+                <a href="{% url "App:homepage" %}">Home</a>
+            </li>
+            <li {% if section == "User" %}class="selected"{% endif %}>
+              <a href="{% url "App:user_information" %}">User</a>
+            <li {% if section == "Edit" %}class="selected"{% endif %}>
+              <a href="{% url "App:edit" %}">Edit</a>
+            </li>
+            <li {% if section == "Search" %}class="selected"{% endif %}>
+              <a href="{% url "App:search_paper" %}">Search</a>
+            </li>
+            <li {% if section == "Submit" %}class="selected"{% endif %}>
+              <a href="{% url "App:submit_paper" %}">Submit</a>
+          </ul>
+        {% endif %}
+
+        <span class="user">
+          {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }},
+            <a href="{% url "App:logout" %}">Logout</a>
+          {% else %}
+            <a href="{% url "App:login" %}">Log-in</a>
+          {% endif %}
+        </span>
+
+    </div>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+            <a href="#" class="close">x</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+
+

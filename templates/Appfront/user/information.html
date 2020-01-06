@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your information</h1>
+    <h2>Your Paper: </h2>
+    {% for paper in paper_list %}
+        <h3>
+            <a href="{{ paper.get_absolute_url }}">
+                {{ paper.title }}
+            </a>
+        </h3>
+        <p class="date">
+            Published {{ paper.publish }}
+        </p>
+    {% empty %}
+        You have no Paper
+    {% endfor %}
+    <h2>Your Comments: </h2>
+    {% for comment in comment_list %}
+        <h3>
+            <a>{{ comment.body }}</a>
+        </h3>
+        <p class="date">
+        Created {{ comment.created }}
+    {% empty %}
+        Your have no comment
+    {% endfor %}
+{% endblock %}
